@@ -222,11 +222,11 @@ img { max-width: 100%; height: auto; }
 .col { max-width: 700px; margin: 0 auto; }
 .col-post { max-width: 660px; }
 .rule { height: 1px; background: var(--line2); margin-top: 44px; }
-@keyframes omblink { 0%, 48% { opacity: 1 } 49%, 100% { opacity: 0 } }
+/* A static block, not a blinking one — the blink pulled the eye away from the
+   prose on every page. Still used as a terminal flourish on 404. */
 .cursor {
   display: inline-block; width: 7px; height: 14px; margin-left: 6px;
   background: var(--accent); vertical-align: -2px;
-  animation: omblink 1.15s steps(1) infinite;
 }
 
 /* --- Top bar ------------------------------------------------ */
@@ -480,7 +480,29 @@ img { max-width: 100%; height: auto; }
   .prose > p, .prose ul, .prose ol { font-size: 16px; }
   .prevnext { grid-template-columns: 1fr; }
   .prevnext a.next { text-align: left; }
-  .topnav a { padding: 6px 8px; }
   .theme-btn .key, .rss, .hide-sm { display: none; }
   .result { grid-template-columns: 1fr; }
+
+  /* The three-column topbar overflowed the viewport at phone widths, which
+     pushed the theme button off-screen and was the only source of horizontal
+     scroll. Tighten every part of the row so it fits instead of spills. */
+  .topbar { gap: 8px; padding: 0 14px; }
+  .brand { font-size: 13.5px; }
+  .topnav { gap: 0; }
+  .topnav a { padding: 6px 7px; gap: 0; font-size: 12px; }
+  .topnav a .n { display: none; }
+  /* Keep the colour chips as the affordance; the label is what did not fit.
+     The button still has aria-label="Change theme" for screen readers. */
+  .theme-btn { gap: 0; padding: 6px 8px; }
+  .theme-btn #theme-name { display: none; }
+}
+
+/* Narrow phones (320px — original SE). The topbar still spilled ~50px here,
+   so drop the ".com" and tighten the row further. */
+@media (max-width: 360px) {
+  .topbar { gap: 6px; padding: 0 10px; }
+  .brand { font-size: 13px; }
+  .brand-c { display: none; }
+  .topnav a { padding: 6px 5px; font-size: 11.5px; }
+  .wrap { padding: 0 14px; }
 }
