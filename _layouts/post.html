@@ -1,0 +1,46 @@
+---
+layout: default
+---
+<article class="wrap">
+  <div class="col col-post">
+    <div class="crumb">
+      <a href="{{ '/' | relative_url }}">~/writing</a><span>/</span><span>{{ page.date | date: "%Y" }}</span><span>/</span>
+      <span class="here">{{ page.slug | default: page.title | slugify }}.md</span>
+    </div>
+
+    <h1 class="post-title">{{ page.title }}</h1>
+    <div class="post-meta">
+      <span class="date">{{ page.date | date: "%Y-%m-%d" }}</span>
+      <span class="sep"></span><span class="kind">{{ page.kind }}</span>
+      <span class="sep"></span><span>{{ content | number_of_words | divided_by: 220 | plus: 1 }} min</span>
+      {% if page.tags.size > 0 %}<span class="sep"></span><span>{% for t in page.tags %}#{{ t }} {% endfor %}</span>{% endif %}
+    </div>
+
+    <div class="prose {% if page.dropcap != false %}has-dropcap{% endif %}">{{ content }}</div>
+
+    {% assign backlinks = "" | split: "" %}
+    {% for p in site.posts %}
+      {% if p.url != page.url and p.content contains page.url %}{% assign backlinks = backlinks | push: p %}{% endif %}
+    {% endfor %}
+    {% if backlinks.size > 0 %}
+    <section class="panel backlinks">
+      <div class="panel-head">linked from — {{ backlinks.size }} note{% if backlinks.size != 1 %}s{% endif %}</div>
+      {% for p in backlinks %}
+      <a class="backlink" href="{{ p.url | relative_url }}">
+        <span class="bl-title">{{ p.title }}</span>
+        <span class="bl-note">{{ p.description | default: p.excerpt | strip_html | truncate: 120 }}</span>
+      </a>
+      {% endfor %}
+    </section>
+    {% endif %}
+
+    <nav class="prevnext">
+      {% if page.previous %}
+      <a href="{{ page.previous.url | relative_url }}"><span class="lbl">← previous</span><span class="t">{{ page.previous.title }}</span></a>
+      {% else %}<span></span>{% endif %}
+      {% if page.next %}
+      <a class="next" href="{{ page.next.url | relative_url }}"><span class="lbl">next →</span><span class="t">{{ page.next.title }}</span></a>
+      {% else %}<span></span>{% endif %}
+    </nav>
+  </div>
+</article>

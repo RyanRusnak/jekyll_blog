@@ -1,0 +1,53 @@
+title: Ryan Rusnak
+tagline: Musings, mostly written at night.
+description: >-
+  Ryan Rusnak on logistics software, plain text, and the slow craft of
+  shipping things that last. Written in a folder, published by a robot.
+author: Ryan Rusnak
+url: "https://ryanrusnak.com"
+baseurl: ""
+
+# Omarchy theme that loads before JS runs. One of:
+# gruvbox tokyo-night catppuccin catppuccin-latte everforest nord
+# rose-pine kanagawa matte-black osaka-jade ristretto
+default_theme: gruvbox
+
+permalink: /:title/
+markdown: kramdown
+highlighter: rouge
+kramdown:
+  input: GFM
+  footnote_nr: 1
+  syntax_highlighter: rouge
+  syntax_highlighter_opts:
+    block:
+      line_numbers: false
+
+plugins:
+  - jekyll-feed
+  - jekyll-sitemap
+  - jekyll-paginate-v2
+
+pagination:
+  enabled: true
+  per_page: 15
+  permalink: "/page/:num/"
+  title: ":title — page :num"
+  sort_reverse: true
+
+feed:
+  path: /feed.xml
+
+defaults:
+  - scope: { path: "", type: "posts" }
+    values:
+      layout: post
+      kind: notes
+
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - README.md
+  - SETUP-OBSIDIAN.md
+  - script/
+  - vendor/

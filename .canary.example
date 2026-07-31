@@ -1,0 +1,17 @@
+# Canary patterns for script/guard_repo.sh — copy to `.canary` (gitignored).
+#
+# One extended regex per line. If any tracked file in this repo matches, the
+# push is refused. Put a distinctive string from each sensitive note here, and
+# a phrase you would never write in a blog post.
+#
+# The real `.canary` is NOT committed — a canary living in the repo it guards
+# is testing itself. Because of that, this half of the guard is local only;
+# the path checks in guard_repo.sh run in CI too.
+
+# A token you paste into your most sensitive notes, e.g. in Finances/:
+# CANARY-DO-NOT-PUBLISH-8f2a1c
+
+# Phrases that should never appear on a public site:
+# Option Exercise
+# strike price
+# [0-9]{3}-[0-9]{2}-[0-9]{4}

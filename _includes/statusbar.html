@@ -1,0 +1,12 @@
+<footer class="statusbar">
+  <div class="left">
+    <span class="mode">{% if page.layout == 'post' %}post{% elsif page.url == '/' %}writing{% else %}{{ page.title | slugify | default: 'page' }}{% endif %}</span>
+    <span>{{ site.posts | size }} posts</span>
+    <span class="hide-sm">{{ site.tagline }}</span>
+  </div>
+  <div class="right">
+    <span class="hide-sm">jekyll {{ jekyll.version }}</span>
+    <span id="status-theme">gruvbox</span>
+    <span class="dim">© {{ 'now' | date: "%Y" }} {{ site.author }}</span>
+  </div>
+</footer>

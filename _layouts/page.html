@@ -1,0 +1,10 @@
+---
+layout: default
+---
+<div class="wrap">
+  <div class="col">
+    <div class="crumb"><a href="{{ '/' | relative_url }}">~</a><span>/</span><span class="here">{{ page.title | slugify }}.md</span></div>
+    <h1 class="page-title">{{ page.title }}</h1>
+    <div class="prose">{{ content }}</div>
+  </div>
+</div>

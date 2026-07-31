@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+# ---------------------------------------------------------------------------
+# pre-push — last stop before anything leaves the machine.
+#
+# Enable it once (it is version controlled, so this survives a fresh clone):
+#
+#   git config core.hooksPath script/hooks
+#
+# Bypassing it takes an explicit --no-verify, which is the point: publishing
+# should be the easy path and leaking should require you to insist.
+# ---------------------------------------------------------------------------
+set -euo pipefail
+exec bash "$(git rev-parse --show-toplevel)/script/guard_repo.sh"

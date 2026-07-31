@@ -1,0 +1,20 @@
+# Build output
+_site/
+.jekyll-cache/
+.sass-cache/
+vendor/
+.bundle/
+
+# Never track vault content, whatever it gets called or wherever it lands.
+# The importer reads the vault from outside this repo; nothing from it belongs
+# in git except the generated posts in _posts/ and images in assets/img/.
+/vault/
+/garden/
+/Obsidian Vault/
+**/.obsidian/
+**/.trash/
+
+# Local canary patterns for the pre-push guard (see script/hooks/pre-push)
+.canary
+
+.DS_Store

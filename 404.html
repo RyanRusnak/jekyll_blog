@@ -1,0 +1,21 @@
+---
+layout: default
+title: Not found
+permalink: /404.html
+---
+<div class="wrap">
+  <div class="col col-post notfound">
+    <div class="eyebrow-plain">error 404</div>
+    <h1>No such file<br><span class="accent">or directory.</span></h1>
+    <div class="term">
+      <div class="dim"><span class="ok">$</span> cat ~/garden/whatever-you-were-looking-for.md</div>
+      <div class="err">cat: no such file or directory</div>
+      <div class="dim sp"><span class="ok">$</span> ls ~/garden | head -3</div>
+      {% for post in site.posts limit: 3 %}<div class="fg">{{ post.title | slugify }}.md{% if forloop.last %}<span class="cursor"></span>{% endif %}</div>{% endfor %}
+    </div>
+    <div class="btns">
+      <a class="btn-primary" href="{{ '/' | relative_url }}">← back to writing</a>
+      <a class="btn-ghost" href="{{ '/search/' | relative_url }}">search instead</a>
+    </div>
+  </div>
+</div>

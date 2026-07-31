@@ -1,0 +1,19 @@
+<header class="topbar">
+  <a class="brand" href="{{ '/' | relative_url }}">
+    <span class="brand-a">ryan</span><span class="brand-b">rusnak</span><span class="brand-c">.com</span>
+    <span class="cursor" aria-hidden="true"></span>
+  </a>
+  <nav class="topnav">
+    <a href="{{ '/' | relative_url }}" class="{% if page.url == '/' or page.layout == 'post' %}is-active{% endif %}"><span class="n">1</span>writing</a>
+    <a href="{{ '/about/' | relative_url }}" class="{% if page.url == '/about/' %}is-active{% endif %}"><span class="n">2</span>about</a>
+    <a href="{{ '/search/' | relative_url }}" class="{% if page.url == '/search/' %}is-active{% endif %}"><span class="n">3</span>search</a>
+  </nav>
+  <div class="topbar-right">
+    <a class="rss" href="{{ '/feed.xml' | relative_url }}">RSS</a>
+    <button class="theme-btn" id="theme-btn" aria-label="Change theme">
+      <span class="chips" aria-hidden="true"><i></i><i></i><i></i></span>
+      <span id="theme-name">gruvbox</span>
+      <span class="key">T</span>
+    </button>
+  </div>
+</header>
