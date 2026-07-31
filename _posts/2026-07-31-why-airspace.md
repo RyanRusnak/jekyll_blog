@@ -20,7 +20,7 @@ I wanted to go to bed every night knowing that I made the world a better place. 
 
 I also wanted something that would be the best measure of my skills. I wanted to *know* that I was good. I needed to prove it to myself for some reason. Who knows why.
 
-Then, I meet Nick Bulcao. He explained to me that time critical shipping was broken and that people were suffering because of it. Doctors, for instance, try to minimize the time an organ for transplant is outside of the body so they will coordinate the surgery around the time that the forwarder gives them. Then something as simple as traffic happens and the patient might wake up finding out that their organ that was a one in a million match expired. Now it is going for research and they are back on the transplant list.
+Then, I meet Nick Bulcao. He explained to me that time critical shipping was broken and that people were suffering because of it. Doctors, for instance, try to minimize the time an organ for transplant is outside of the body so they will coordinate the surgery around the time that the forwarder gives them. Then something as simple as traffic happens and the patient might wake up finding out that their organ, that was a one in a million match, expired. Now it is going for research and they are back on the transplant list.
 
 In that moment, I knew how I wanted to spend my time. That was almost 11 years ago, almost 20 patents ago, millions of lines of code ago, and to this day I still feel lucky to go to bed knowing that what I did that day mattered to someone. 
 
