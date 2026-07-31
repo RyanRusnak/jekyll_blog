@@ -50,7 +50,8 @@ recent="$(ruby -e '
 
 if [ -n "$recent" ]; then
   echo "still being edited (touched in the last ${QUIET_SECONDS}s), backing off:"
-  printf '  %s\n' $recent
+  # Quoted + read, not `printf '%s\n' $recent` — note titles contain spaces.
+  printf '%s\n' "$recent" | while IFS= read -r name; do printf '  %s\n' "$name"; done
   echo "nothing published."
   exit 0
 fi

@@ -42,15 +42,19 @@ def slugify(str)
   str.to_s.downcase.gsub(/[^a-z0-9\s-]/, "").strip.gsub(/[\s_-]+/, "-")
 end
 
+# Returns [meta, body, error]. The error matters: frontmatter that will not
+# parse must never be quietly downgraded to "private", because the author who
+# ticked the publish box would see nothing happen and no reason why.
 def split_frontmatter(raw)
-  return [{}, raw] unless raw.start_with?("---")
+  return [{}, raw, nil] unless raw.start_with?("---")
   parts = raw.split(/^---\s*$/, 3)
-  meta  = begin
-    YAML.safe_load(parts[1], permitted_classes: [Date, Time]) || {}
-  rescue StandardError
-    {}
+  begin
+    meta = YAML.safe_load(parts[1], permitted_classes: [Date, Time]) || {}
+    meta = {} unless meta.is_a?(Hash)
+    [meta, parts[2].to_s.lstrip, nil]
+  rescue StandardError => e
+    [{}, parts[2].to_s.lstrip, e.message.lines.first.to_s.strip]
   end
-  [meta.is_a?(Hash) ? meta : {}, parts[2].to_s.lstrip]
 end
 
 warnings = []
@@ -58,9 +62,22 @@ warnings = []
 # --- pass 1: index Blog/ only ----------------------------------------------
 # Notes outside PUBLISH_DIR are never opened, so their titles and bodies
 # cannot reach the build even by accident.
-notes = {}
+notes  = {}
+broken = []
 Dir.glob(File.join(ROOT, "**", "*.md")).sort.each do |path|
-  meta, body = split_frontmatter(File.read(path))
+  raw = File.read(path)
+  meta, body, fm_error = split_frontmatter(raw)
+
+  if fm_error
+    # A note whose raw text asks to be published but whose YAML will not parse
+    # is an error, not a warning — honouring it as "private" hides the problem.
+    if raw.match?(/^publish:\s*true\s*$/)
+      broken << "#{File.basename(path)} — #{fm_error}"
+    else
+      warnings << "#{File.basename(path)}: unreadable frontmatter (#{fm_error}) — treated as private"
+    end
+  end
+
   name  = File.basename(path, ".md")
   title = meta["title"] || name
 
@@ -69,6 +86,23 @@ Dir.glob(File.join(ROOT, "**", "*.md")).sort.each do |path|
     slug: slugify(meta["slug"] || title),
     published: meta["publish"] == true # Gate 2. Anything else is private.
   }
+end
+
+unless broken.empty?
+  abort <<~MSG
+
+    #{broken.length} note(s) ask to be published but their frontmatter will not parse:
+
+    #{broken.map { |b| "  #{b}" }.join("\n")}
+
+    Nothing was imported and nothing was pruned. The usual cause is an
+    unquoted colon in a value — YAML reads it as a nested key:
+
+        description: In 2015 I wanted two things: something meaningful   # broken
+        description: "In 2015 I wanted two things: something meaningful" # fixed
+
+    Fix the note and re-run.
+  MSG
 end
 
 published = notes.each_value.select { |n| n[:published] }
