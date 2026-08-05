@@ -16,7 +16,7 @@ I met Nick in 2015. I had just woken up to the idea that spending my time on thi
 1. Something meaningful.
 2. Something super hard.
 
-I wanted to go to bed every night knowing that I made the world a better place. That ruled out pretty much every company most people were vying to work at at the time like Twitter, Facebook, Pinterest, etc. Nothing against those companies, but they do not check point number one.
+I wanted to go to bed every night knowing that I made the world a better place. That ruled out pretty much every company most people were vying to work at the time like Twitter, Facebook, Pinterest, etc. Nothing against those companies, but they do not check point number one.
 
 I also wanted something that would be the best measure of my skills. I wanted to *know* that I was good. I needed to prove it to myself for some reason. Who knows why.
 
