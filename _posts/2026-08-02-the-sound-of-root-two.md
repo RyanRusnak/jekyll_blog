@@ -9,6 +9,7 @@ tags:
 description: The math behind why some notes sound good together and others don't —
   clean integer ratios versus the irrational number our ears hate most.
 slug: the-sound-of-root-two
+math: true
 ---
 
 I have no idea if we are living in a simulation and I have exactly zero interest in watching a video of Elon Musk pontificating about it. 

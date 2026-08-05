@@ -311,6 +311,12 @@ img { max-width: 100%; height: auto; }
 
 /* --- Prose (markdown output) -------------------------------- */
 .prose { padding-bottom: 8px; }
+/* A long unbreakable token — a bare URL, an id, a mistyped link — must wrap
+   rather than widen the page. Without this, one 48-char URL in one paragraph
+   brings back horizontal scroll on phones. */
+.prose p, .prose li, .prose blockquote, .prose h1, .prose h2, .prose h3,
+.prose h4, .prose h5, .prose h6 { overflow-wrap: break-word; }
+
 .prose > p { margin: 22px 0 0; font-size: 17px; line-height: 1.85; color: var(--fg); text-wrap: pretty; }
 .prose > p:first-child { margin-top: 34px; }
 .prose.has-dropcap > p:first-child::first-letter {
@@ -359,6 +365,14 @@ img { max-width: 100%; height: auto; }
 .prose .code-file .lang { color: var(--faint); }
 .prose pre { margin: 0; padding: 20px 18px; overflow-x: auto; background: transparent; }
 .prose pre code { padding: 0; background: none; border: 0; color: var(--fg); font-size: 13.5px; line-height: 1.75; }
+
+/* MathJax. A wide equation must scroll inside its own box rather than widen
+   the page — otherwise it reintroduces the horizontal scroll on phones. */
+mjx-container { max-width: 100%; }
+mjx-container[display="true"] {
+  overflow-x: auto; overflow-y: hidden;
+  padding: 6px 0; margin: 22px 0;
+}
 .highlight .c, .highlight .c1, .highlight .cm { color: var(--faint); font-style: italic; }
 .highlight .k, .highlight .kd, .highlight .kn, .highlight .kp, .highlight .kr, .highlight .kt { color: var(--purple); }
 .highlight .s, .highlight .s1, .highlight .s2, .highlight .sb, .highlight .sr { color: var(--green); }

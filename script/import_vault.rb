@@ -182,6 +182,13 @@ def rewrite_embeds(text, root, copied, warnings, note_name)
   end
 end
 
+# True if the note contains TeX. Matches $$…$$ (which kramdown parses) and
+# Obsidian's inline $…$ (which it does not) — the lookarounds keep the inline
+# pattern from matching one half of a $$ pair.
+def has_math?(text)
+  text.match?(/\$\$.+?\$\$/m) || text.match?(/(?<!\$)\$(?!\s)[^$\n]+\$(?!\$)/)
+end
+
 def rewrite_mermaid(text)
   text.gsub(/^```mermaid\n(.*?)^```$/m) { %(<div class="mermaid">\n#{Regexp.last_match(1)}</div>) }
 end
@@ -217,7 +224,8 @@ published.each do |note|
     "description" => meta["description"],
     "slug"        => note[:slug],
     "dropcap"     => meta["dropcap"],
-    "mermaid"     => body.include?(%(class="mermaid")) || nil
+    "mermaid"     => body.include?(%(class="mermaid")) || nil,
+    "math"        => has_math?(body) || nil
   }
   front = front.reject { |_, v| v.nil? }
 

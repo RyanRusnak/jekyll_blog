@@ -20,5 +20,23 @@
     mermaid.initialize({ startOnLoad: true, theme: "dark", themeVariables: { background: dark, fontFamily: "JetBrains Mono, monospace" } });
   </script>
   {% endif %}
+  {% if page.math %}
+  <script>
+    // kramdown already turned the markdown into \( \) and \[ \] — all that is
+    // missing is something to render them. Loaded only on pages with math.
+    // Obsidian writes inline math as $…$, which kramdown leaves alone (it only
+    // treats $$…$$ as math), so MathJax has to accept single dollars too.
+    // processEscapes lets a literal dollar be written \$ if a post needs one.
+    window.MathJax = {
+      tex: {
+        inlineMath: [["$", "$"], ["\\(", "\\)"]],
+        displayMath: [["$$", "$$"], ["\\[", "\\]"]],
+        processEscapes: true
+      },
+      options: { skipHtmlTags: ["script", "noscript", "style", "textarea", "pre", "code"] }
+    };
+  </script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+  {% endif %}
 </body>
 </html>
