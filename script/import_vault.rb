@@ -46,8 +46,12 @@ end
 # parse must never be quietly downgraded to "private", because the author who
 # ticked the publish box would see nothing happen and no reason why.
 def split_frontmatter(raw)
-  return [{}, raw, nil] unless raw.start_with?("---")
-  parts = raw.split(/^---\s*$/, 3)
+  # Tolerate a UTF-8 BOM and leading blank lines before the opening `---`.
+  # Obsidian and several editors leave a stray newline at the top of a file,
+  # and that alone used to make the entire frontmatter block invisible.
+  text = raw.sub(/\A\xEF\xBB\xBF/, "").sub(/\A(?:[ \t]*\r?\n)+/, "")
+  return [{}, raw, nil] unless text.start_with?("---")
+  parts = text.split(/^---\s*$/, 3)
   begin
     meta = YAML.safe_load(parts[1], permitted_classes: [Date, Time]) || {}
     meta = {} unless meta.is_a?(Hash)
@@ -68,14 +72,14 @@ Dir.glob(File.join(ROOT, "**", "*.md")).sort.each do |path|
   raw = File.read(path)
   meta, body, fm_error = split_frontmatter(raw)
 
-  if fm_error
-    # A note whose raw text asks to be published but whose YAML will not parse
-    # is an error, not a warning — honouring it as "private" hides the problem.
-    if raw.match?(/^publish:\s*true\s*$/)
-      broken << "#{File.basename(path)} — #{fm_error}"
-    else
-      warnings << "#{File.basename(path)}: unreadable frontmatter (#{fm_error}) — treated as private"
-    end
+  # Intent-to-publish that we cannot honour must never pass silently, whatever
+  # the cause: bad YAML, frontmatter in the wrong place, anything. The author
+  # ticked the box and would otherwise watch the note be quietly held back.
+  if raw.match?(/^publish:\s*true\s*$/) && meta["publish"] != true
+    broken << "#{File.basename(path)} — " +
+              (fm_error || "frontmatter not recognised; the opening `---` must be the first thing in the file")
+  elsif fm_error
+    warnings << "#{File.basename(path)}: unreadable frontmatter (#{fm_error}) — treated as private"
   end
 
   name  = File.basename(path, ".md")
