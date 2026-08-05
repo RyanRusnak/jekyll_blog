@@ -147,9 +147,29 @@ $EDITOR .canary        # add a token you paste into your sensitive notes
   default attachment folder: `Blog/attachments`
 - Editor → Properties in document: **Visible** (gives you a checkbox for
   `publish` instead of raw YAML — typing the key is where typos live)
-- Enable the **Templater** plugin, point its template folder at `templates/`,
-  and use `templates/blog post.md` for new posts. It writes `publish: false`,
-  so publishing is always a deliberate flip.
+- Enable the **Templater** plugin (installed but off), set its template folder
+  to `templates`, and use `templates/blog post.md` for new posts:
+
+  ```yaml
+  ---
+  title: "<% tp.file.title %>"
+  date: <% tp.date.now("YYYY-MM-DD") %>
+  kind: essay
+  tags: []
+  description: ""
+  publish: false
+  ---
+  ```
+
+  `title` and `description` are pre-quoted on purpose. An unquoted colon in a
+  value is read by YAML as a nested key, which is what silently unpublished a
+  post once — starting from quotes means you cannot hit it. `publish: false`
+  means shipping is always a deliberate flip.
+
+  **Leave "Trigger Templater on new file creation" OFF.** With LiveSync, files
+  arriving from another device count as new files, so that setting can fire the
+  template into notes syncing in from your phone. Use the command palette
+  instead: `Templater: Create new note from template`.
 
 ---
 
