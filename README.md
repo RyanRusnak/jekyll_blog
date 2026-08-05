@@ -26,7 +26,7 @@ is in this repo, it is public.
 2. Repo → Settings → Pages → **Source: GitHub Actions**.
 3. `git config core.hooksPath script/hooks` — enables the pre-push guard that
    refuses to ship vault content.
-4. `script/publish.sh` — imports `Blog/` from the vault, shows you the diff,
+4. `script/publish.sh` — imports `Blog/Published/` from the vault, shows you the diff,
    asks, pushes. The Action builds and deploys.
 
 Full details, including the three gates that keep private notes private, are in
@@ -44,12 +44,12 @@ _includes/                   head, header, statusbar, post-card
 assets/css/main.scss         the whole theme, incl. all 11 palettes
 assets/js/theme.js           palette switcher (T)
 assets/js/search.js          client-side search over search.json
-script/import_vault.rb       Obsidian Blog/ → _posts (allowlist + prune)
+script/import_vault.rb       Obsidian Blog/Published/ → _posts (allowlist + prune)
 script/publish.sh            the publishing pipeline, run where the vault lives
 script/guard_repo.sh         refuses to ship vault content (pre-push + CI)
 script/hooks/pre-push        enable with: git config core.hooksPath script/hooks
 _posts/                      generated — do not hand-edit, edit the note
-assets/img/                  generated — copied from Blog/attachments
+assets/img/                  generated — copied from Blog/Published/attachments
 index.html  about.md  search.md  404.html
 ```
 

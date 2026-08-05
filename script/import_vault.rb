@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 # ---------------------------------------------------------------------------
-# import_vault.rb — turn the vault's Blog/ folder into Jekyll posts.
+# import_vault.rb — turn the vault's Blog/Published/ folder into Jekyll posts.
 #
 #   ruby script/import_vault.rb ~/Obsidian\ Vault
 #   ruby script/import_vault.rb ~/Obsidian\ Vault --dry-run
@@ -8,12 +8,16 @@
 # Three gates stand between a note and the internet. Each one alone is enough
 # to stop a leak:
 #
-#   1. ALLOWLIST — only PUBLISH_DIR is read. Every other folder in the vault
-#      is invisible to this script. A new folder is private by default.
+#   1. ALLOWLIST — only PUBLISH_DIR is read. Every other folder in the vault,
+#      including the rest of Blog/, is invisible to this script. A new folder
+#      is private by default. Moving a note in is a deliberate act.
 #   2. publish: true — required, in the note's frontmatter. There is no flag
 #      to turn this off, because a flag you can forget is not a gate.
 #   3. _posts is GENERATED — anything here that no longer maps to a published
 #      note is deleted, so flipping publish back to false unpublishes.
+#
+# So publishing takes two deliberate acts that are easy to keep straight: the
+# note is in Blog/Published/, and its flag is true. Neither alone does anything.
 #
 # The vault itself is never committed. This script runs on the machine that
 # holds the vault; CI only builds what _posts already contains.
@@ -27,22 +31,31 @@ DRY_RUN     = ARGV.include?("--dry-run")
 ALLOW_EMPTY = ARGV.include?("--allow-empty")
 
 # Gate 1. The only folder in the vault this script is permitted to read.
-PUBLISH_DIR = "Blog"
+BLOG_DIR    = "Blog"
+PUBLISH_DIR = File.join(BLOG_DIR, "Published")
 
 # Subfolders of PUBLISH_DIR that never publish, whatever the frontmatter says.
-# A folder called Drafts should behave like one: leaving it to the flag alone
-# means a single stray `publish: true` is enough to ship a half-written note.
+# Largely belt and braces now that PUBLISH_DIR is a dedicated folder, but it
+# still means a Blog/Published/Drafts/ cannot ship on a stray flag.
 # Matched case-insensitively against every directory in the note's path.
 NEVER_PUBLISH = %w[Drafts Concepts].freeze
 
 POSTS_DIR = "_posts"
 IMG_DIR   = "assets/img"
 ROOT      = File.join(VAULT, PUBLISH_DIR)
+BLOG_ROOT = File.join(VAULT, BLOG_DIR)
 
 IMAGE_EXT = "png|jpe?g|gif|webp|svg"
 
 abort "vault not found: #{VAULT}" unless Dir.exist?(VAULT)
-abort "publish folder not found: #{ROOT}" unless Dir.exist?(ROOT)
+unless Dir.exist?(ROOT)
+  abort <<~MSG
+    publish folder not found: #{ROOT}
+
+    Only notes in #{PUBLISH_DIR}/ publish. Create that folder and move the
+    notes you want live into it.
+  MSG
+end
 
 def slugify(str)
   str.to_s.downcase.gsub(/[^a-z0-9\s-]/, "").strip.gsub(/[\s_-]+/, "-")
@@ -123,6 +136,19 @@ Dir.glob(File.join(ROOT, "**", "*.md")).sort.each do |path|
     # over the flag outright.
     published: meta["publish"] == true && blocked.nil?
   }
+end
+
+# Notes elsewhere under Blog/ are outside the read scope, so a `publish: true`
+# sitting in one would do nothing at all with no explanation — the exact silent
+# failure the loud guards above exist to prevent. Only the frontmatter region is
+# read here, never the body: this looks for a flag, it does not import anything.
+Dir.glob(File.join(BLOG_ROOT, "**", "*.md")).sort.each do |path|
+  next if path.start_with?(ROOT + File::SEPARATOR)
+  head = File.foreach(path).first(40).join rescue next
+  next unless head.match?(/^publish:\s*true\s*$/)
+  rel = path.sub(/\A#{Regexp.escape(BLOG_ROOT)}#{Regexp.escape(File::SEPARATOR)}?/, "")
+  warnings << "#{rel}: has `publish: true` but is not in #{PUBLISH_DIR}/ — " \
+              "move it there to publish it."
 end
 
 unless broken.empty?

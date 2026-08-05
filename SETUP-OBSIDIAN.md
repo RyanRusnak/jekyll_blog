@@ -15,10 +15,13 @@ to skip" to reason about, because the private notes are not here at all.
 
 ```
 ~/Obsidian Vault/
-  Blog/          ← the ONLY folder the importer reads
-    Why Airspace.md
-    Drafts/      ← never publishes, whatever the frontmatter says
-    Concepts/    ← never publishes, whatever the frontmatter says
+  Blog/
+    Published/   ← the ONLY folder the importer reads
+      Why Airspace.md
+      attachments/
+    Drafts/      ← invisible to the pipeline
+    Concepts/    ← invisible to the pipeline
+    a note.md    ← invisible to the pipeline
   Calendar/      ← invisible to the pipeline
   Finances/      ← invisible to the pipeline
   Musings/       ← invisible to the pipeline
@@ -28,20 +31,27 @@ to skip" to reason about, because the private notes are not here at all.
 
 `PUBLISH_DIR` at the top of `script/import_vault.rb` is an **allowlist**, not a
 list of exclusions. A folder you add next year is private by default — you never
-have to remember to exclude it.
+have to remember to exclude it. Note it is `Blog/Published`, not `Blog`: the rest
+of `Blog/` is as invisible as `Finances/`.
 
-`NEVER_PUBLISH` is the one exception inside `Blog/`. Notes under those
-subfolders — at any depth, matched case-insensitively — are private even with
-`publish: true`, and the importer says so rather than leaving you to wonder:
+**Publishing therefore takes two deliberate acts**: move the note into
+`Blog/Published/`, and set `publish: true`. Neither alone does anything, and
+both are easy to see at a glance — a folder you can look at, and a checkbox.
+
+Because the rest of `Blog/` is unreadable, a `publish: true` left behind there
+would otherwise do nothing with no explanation. So the importer scans `Blog/`
+for stray flags — reading only the frontmatter region, never the body — and
+tells you:
 
 ```
-warning: Life Starts at 40.md: in Drafts/, which never publishes —
-         `publish: true` is being ignored. Move it out of Drafts/ to publish it.
+warning: Drafts/Life Starts at 40.md: has `publish: true` but is not in
+         Blog/Published/ — move it there to publish it.
 ```
 
-It is a warning rather than an error on purpose: one unfinished draft must never
-be able to block publishing everything else. To publish such a note, move it up
-into `Blog/`.
+`NEVER_PUBLISH` still applies *inside* `Blog/Published/`, so a
+`Blog/Published/Drafts/` cannot ship on a stray flag either. Both are warnings
+rather than errors on purpose: one unfinished draft must never be able to block
+publishing everything else.
 
 Sync is Obsidian LiveSync over Tailscale. Write from any device on the tailnet;
 only the Mac mini has the repo and the push credentials, so a phone cannot
@@ -55,13 +65,13 @@ Each one alone is enough to stop an accident. Publishing takes all three.
 
 | # | Gate | Where |
 | --- | --- | --- |
-| 1 | Only `Blog/` is ever read | `PUBLISH_DIR`, `script/import_vault.rb` |
+| 1 | Only `Blog/Published/` is ever read | `PUBLISH_DIR`, `script/import_vault.rb` |
 | 2 | `publish: true` required — absent or `false` means private | note frontmatter |
 | 2a | `Drafts/` and `Concepts/` never publish, flag or not | `NEVER_PUBLISH` |
 | 3 | Vault content cannot be committed | `script/guard_repo.sh`, pre-push hook + CI |
 
-So a leak needs two independent mistakes — moving a note into `Blog/` **and**
-setting `publish: true` — and neither does anything by itself.
+So a leak needs two independent mistakes — moving a note into `Blog/Published/`
+**and** setting `publish: true` — and neither does anything by itself.
 
 `_posts/` is **generated**. The importer prunes anything no longer backed by a
 published note, so flipping `publish` back to `false` actually unpublishes. Do
@@ -109,14 +119,14 @@ publishes only the first, rather than silently clobbering one with the other.
 | `## Section` | Small-caps section rule with an accent dash |
 | `> quote` | Large italic pull quote with an accent bar |
 | `> [!note]` / `[!warning]` / `[!tip]` / `[!danger]` / `[!quote]` | Coloured callout blocks |
-| `[[another note]]` | Real link **if that note is in `Blog/` and published**; otherwise plain text |
+| `[[another note]]` | Real link **if that note is in `Blog/Published/` and published**; otherwise plain text |
 | `[[another note\|alias]]` | Same, with your alias as the label |
 | `![[screenshot.png]]` | Full-width bordered figure; `![[shot.png\|caption]]` adds a caption |
 | ```` ```mermaid ```` fence | Rendered diagram |
 | `[^1]` footnotes | Footnote list under a hairline rule |
 
-Attachments are resolved **inside `Blog/` only** — put images in
-`Blog/attachments/`. An embed pointing outside it is dropped with a warning
+Attachments are resolved **inside `Blog/Published/` only** — put images in
+`Blog/Published/attachments/`. An embed pointing outside it is dropped with a warning
 rather than reaching into the rest of the vault on a filename match.
 
 A wikilink to an unpublished note renders as plain text with no tooltip, so a
@@ -144,7 +154,7 @@ $EDITOR .canary        # add a token you paste into your sensitive notes
 **Obsidian settings**
 
 - Files & Links → New link format: **Shortest possible path**; Wikilinks: **on**;
-  default attachment folder: `Blog/attachments`
+  default attachment folder: `Blog/Published/attachments`
 - Editor → Properties in document: **Visible** (gives you a checkbox for
   `publish` instead of raw YAML — typing the key is where typos live)
 - Enable the **Templater** plugin (installed but off), set its template folder
