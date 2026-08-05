@@ -47,7 +47,7 @@ $$458:440 \approx 25:24$$
 
 ### The Worst Sounds
 
-So if that sounds bad, what is the *worst* sounding ratio? Maybe that can help us see how our brain works. Luckily, music is old and people love to complain. There is an old story of something called the [Tritone][https://en.wikipedia.org/wiki/Tritone] or the **Devil’s Chord** which has a great history on its own, but it is usually referenced as the worst sounding noise you can make by combining western musical notes.
+So if that sounds bad, what is the *worst* sounding ratio? Maybe that can help us see how our brain works. Luckily, music is old and people love to complain. There is an old story of something called the [Tritone](https://en.wikipedia.org/wiki/Tritone) or the **Devil’s Chord** which has a great history on its own, but it is usually referenced as the worst sounding noise you can make by combining western musical notes.
 
 It is defined as notes that span 6 semitones. There is music detail in here that we will ignore that has to do with it being two possible notes (**D#** and **Eb** from **A**) depending on sharps and flats which we will ignore and I will just tell you that from **A** the note that makes a tritone is **D#** and that **D#** is 618.75Hz.
 

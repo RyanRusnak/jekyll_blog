@@ -27,7 +27,7 @@ Anyone can start a business, but generally I think you need three things to have
 ##### The idea
 This is the thing that everyone has and it is the only thing most people talk about because they have no idea they need the other two. I guess by definition it is still required, but it is definitely the easiest one to get of the three. 
 ##### The Expertise
-You need to be knowledgeable enough in a field to know that it will work. Said in a much more offensive and academic way: you need to make sure you aren’t firmly so high on the [Dunning Kruger][https://en.wikipedia.org/wiki/Dunning%E2%80%93Kruger_effect] curve that you can’t even see the bottom. 
+You need to be knowledgeable enough in a field to know that it will work. Said in a much more offensive and academic way: you need to make sure you aren’t firmly so high on the [Dunning Kruger](https://en.wikipedia.org/wiki/Dunning%E2%80%93Kruger_effect) curve that you can’t even see the bottom. 
 
 This is also why I would look at an app think, “that is so stupid. Why would anyone want an app that makes you look like a dog when you stick out your tongue?” Well, I did not know enough about people to know that millions of people wanted that. I was not an expert in that domain so I never could have made it succeed.
 ##### The Data
