@@ -82,6 +82,16 @@ Dir.glob(File.join(ROOT, "**", "*.md")).sort.each do |path|
     warnings << "#{File.basename(path)}: unreadable frontmatter (#{fm_error}) — treated as private"
   end
 
+  # `[text][url]` is reference-style link syntax and needs a matching `[url]:`
+  # definition. Without one kramdown emits the whole thing verbatim, so a
+  # bracketed URL ships to the live site looking like a mistake. It renders,
+  # so nothing else catches it — hence a hard stop before it publishes.
+  if meta["publish"] == true && body.match?(%r{\]\[(?:https?:)?//})
+    body.scan(%r{\[[^\]]*\]\[(?:https?:)?//[^\]]*\]}).each do |bad|
+      broken << "#{File.basename(path)} — #{bad[0, 60]} should be [text](url), not [text][url]"
+    end
+  end
+
   name  = File.basename(path, ".md")
   title = meta["title"] || name
 
@@ -95,15 +105,20 @@ end
 unless broken.empty?
   abort <<~MSG
 
-    #{broken.length} note(s) ask to be published but their frontmatter will not parse:
+    #{broken.length} problem(s) would publish something broken:
 
     #{broken.map { |b| "  #{b}" }.join("\n")}
 
-    Nothing was imported and nothing was pruned. The usual cause is an
-    unquoted colon in a value — YAML reads it as a nested key:
+    Nothing was imported and nothing was pruned. Common causes:
 
-        description: In 2015 I wanted two things: something meaningful   # broken
-        description: "In 2015 I wanted two things: something meaningful" # fixed
+      * an unquoted colon in a frontmatter value — YAML reads it as a nested key
+            description: In 2015 I wanted two things: something   # broken
+            description: "In 2015 I wanted two things: something" # fixed
+
+      * frontmatter that is not the very first thing in the file
+
+      * [text][url] instead of [text](url) — reference-style link syntax needs
+        a matching [url]: definition, so kramdown ships it as literal text
 
     Fix the note and re-run.
   MSG
