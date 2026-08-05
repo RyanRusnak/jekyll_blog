@@ -29,6 +29,12 @@ ALLOW_EMPTY = ARGV.include?("--allow-empty")
 # Gate 1. The only folder in the vault this script is permitted to read.
 PUBLISH_DIR = "Blog"
 
+# Subfolders of PUBLISH_DIR that never publish, whatever the frontmatter says.
+# A folder called Drafts should behave like one: leaving it to the flag alone
+# means a single stray `publish: true` is enough to ship a half-written note.
+# Matched case-insensitively against every directory in the note's path.
+NEVER_PUBLISH = %w[Drafts Concepts].freeze
+
 POSTS_DIR = "_posts"
 IMG_DIR   = "assets/img"
 ROOT      = File.join(VAULT, PUBLISH_DIR)
@@ -72,13 +78,28 @@ Dir.glob(File.join(ROOT, "**", "*.md")).sort.each do |path|
   raw = File.read(path)
   meta, body, fm_error = split_frontmatter(raw)
 
+  # Gate 2a. A note under one of NEVER_PUBLISH is private full stop, so the
+  # checks below are skipped for it: a broken link in a draft is not shipping
+  # anywhere, and aborting the whole run over one would be absurd.
+  rel     = path.sub(/\A#{Regexp.escape(ROOT)}#{Regexp.escape(File::SEPARATOR)}?/, "")
+  blocked = File.dirname(rel).split(File::SEPARATOR)
+                .find { |d| NEVER_PUBLISH.any? { |n| n.casecmp?(d) } }
+
+  # The override is deliberate, so say so rather than let the author wonder why
+  # ticking the box did nothing. A warning, not an error — one draft must never
+  # be able to block publishing everything else.
+  if blocked && meta["publish"] == true
+    warnings << "#{File.basename(path)}: in #{blocked}/, which never publishes — " \
+                "`publish: true` is being ignored. Move it out of #{blocked}/ to publish it."
+  end
+
   # Intent-to-publish that we cannot honour must never pass silently, whatever
   # the cause: bad YAML, frontmatter in the wrong place, anything. The author
   # ticked the box and would otherwise watch the note be quietly held back.
-  if raw.match?(/^publish:\s*true\s*$/) && meta["publish"] != true
+  if !blocked && raw.match?(/^publish:\s*true\s*$/) && meta["publish"] != true
     broken << "#{File.basename(path)} — " +
               (fm_error || "frontmatter not recognised; the opening `---` must be the first thing in the file")
-  elsif fm_error
+  elsif fm_error && !blocked
     warnings << "#{File.basename(path)}: unreadable frontmatter (#{fm_error}) — treated as private"
   end
 
@@ -86,7 +107,7 @@ Dir.glob(File.join(ROOT, "**", "*.md")).sort.each do |path|
   # definition. Without one kramdown emits the whole thing verbatim, so a
   # bracketed URL ships to the live site looking like a mistake. It renders,
   # so nothing else catches it — hence a hard stop before it publishes.
-  if meta["publish"] == true && body.match?(%r{\]\[(?:https?:)?//})
+  if !blocked && meta["publish"] == true && body.match?(%r{\]\[(?:https?:)?//})
     body.scan(%r{\[[^\]]*\]\[(?:https?:)?//[^\]]*\]}).each do |bad|
       broken << "#{File.basename(path)} — #{bad[0, 60]} should be [text](url), not [text][url]"
     end
@@ -98,7 +119,9 @@ Dir.glob(File.join(ROOT, "**", "*.md")).sort.each do |path|
   notes[name.downcase] = {
     path: path, meta: meta, body: body, title: title,
     slug: slugify(meta["slug"] || title),
-    published: meta["publish"] == true # Gate 2. Anything else is private.
+    # Gate 2. Anything but an explicit true is private, and NEVER_PUBLISH wins
+    # over the flag outright.
+    published: meta["publish"] == true && blocked.nil?
   }
 end
 

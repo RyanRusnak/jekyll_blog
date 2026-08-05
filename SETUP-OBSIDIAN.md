@@ -16,7 +16,9 @@ to skip" to reason about, because the private notes are not here at all.
 ```
 ~/Obsidian Vault/
   Blog/          ← the ONLY folder the importer reads
-    Publishing from a folder.md
+    Why Airspace.md
+    Drafts/      ← never publishes, whatever the frontmatter says
+    Concepts/    ← never publishes, whatever the frontmatter says
   Calendar/      ← invisible to the pipeline
   Finances/      ← invisible to the pipeline
   Musings/       ← invisible to the pipeline
@@ -27,6 +29,19 @@ to skip" to reason about, because the private notes are not here at all.
 `PUBLISH_DIR` at the top of `script/import_vault.rb` is an **allowlist**, not a
 list of exclusions. A folder you add next year is private by default — you never
 have to remember to exclude it.
+
+`NEVER_PUBLISH` is the one exception inside `Blog/`. Notes under those
+subfolders — at any depth, matched case-insensitively — are private even with
+`publish: true`, and the importer says so rather than leaving you to wonder:
+
+```
+warning: Life Starts at 40.md: in Drafts/, which never publishes —
+         `publish: true` is being ignored. Move it out of Drafts/ to publish it.
+```
+
+It is a warning rather than an error on purpose: one unfinished draft must never
+be able to block publishing everything else. To publish such a note, move it up
+into `Blog/`.
 
 Sync is Obsidian LiveSync over Tailscale. Write from any device on the tailnet;
 only the Mac mini has the repo and the push credentials, so a phone cannot
@@ -42,6 +57,7 @@ Each one alone is enough to stop an accident. Publishing takes all three.
 | --- | --- | --- |
 | 1 | Only `Blog/` is ever read | `PUBLISH_DIR`, `script/import_vault.rb` |
 | 2 | `publish: true` required — absent or `false` means private | note frontmatter |
+| 2a | `Drafts/` and `Concepts/` never publish, flag or not | `NEVER_PUBLISH` |
 | 3 | Vault content cannot be committed | `script/guard_repo.sh`, pre-push hook + CI |
 
 So a leak needs two independent mistakes — moving a note into `Blog/` **and**
