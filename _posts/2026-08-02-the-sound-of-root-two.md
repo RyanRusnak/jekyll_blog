@@ -28,7 +28,7 @@ $$110 \to 220 \to 440 \to 880 $$
  
 A geometric series. So nice.
 
-What about a **A** major *chord*? That is an **A** (440Hz), **C#**** 550Hz) and an **E** (660Hz) — Nice big fat integers. As a programmer, that is crazy to me. It just seems too… *clean*. 
+What about a **A** major *chord*? That is an **A** (440Hz), **C#** (550Hz) and an **E** (660Hz) — Nice big fat integers. As a programmer, that is crazy to me. It just seems too… *clean*. 
 
 $$ 440:550:660 = 4:5:6 $$
 ### The Bad sounds
@@ -64,11 +64,15 @@ Instead, of just saying ***D#** is the half way point on the piano between two *
 Remember that the octaves are a geometric series so you can’t take the half way point between 440 and 880 to find the middle. 
 
 So the half way point between **A** (440Hz) and **A** (880Hz) is:
+
 $$ 440 \times \sqrt{2} \approx 622.25 $$
+
 That is the true halfway point between the **A** notes which is almost the same frequency as **D#**. 
 
 So by definition, if we take the tritone frequency value of A and divide it by the frequency of **A**, you get:
+
 $$ 622.25 \div 440 =1.414$$
+
 Or… the square root of 2.
 
 This tells us that the ratio that our brains **hate the most** is one of the most famous irrational numbers in geometry. 
@@ -78,7 +82,7 @@ So next time someone asks “what is the length of the hypotenuse of a triangle 
 Our ears love big round integers and hate irrational numbers! If that doesn’t make this whole life thing feel like a video game, then I don’t know what does! 
 ### Continued Reading for the Naysayers
 
-*But Ryan, music **IS** a geometric series like any other geometric series so root two isn't special! Look at this!
+*But Ryan, music **IS** a geometric series like any other geometric series so root two isn't special! Look at this!*
 
 $$ 1 \to  2 \to 4 \to 8 \to 16 \to 32 $$
 
