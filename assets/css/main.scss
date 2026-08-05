@@ -324,18 +324,58 @@ img { max-width: 100%; height: auto; }
   color: var(--accent); margin: 6px 14px 0 0; letter-spacing: -0.05em;
 }
 .prose h2 {
+  /* was --faint, which measured 2.8-4.5:1 across the palettes — too low for a
+     heading. --dim is 4.4-7.7:1 for the same quiet small-caps look. */
   margin: 52px 0 0; font-size: 13px; letter-spacing: 0.18em; text-transform: uppercase;
-  color: var(--faint); font-weight: 500; display: flex; align-items: center; gap: 14px;
+  color: var(--dim); font-weight: 500; display: flex; align-items: center; gap: 14px;
 }
 .prose h2::before { content: ""; width: 20px; height: 1px; background: var(--accent); flex: none; }
 .prose h2 + p { margin-top: 18px; }
-.prose h3 { margin: 34px 0 0; font-size: 19px; font-weight: 700; letter-spacing: -0.03em; color: var(--fg); }
-.prose h3 + p { margin-top: 12px; }
+/* --- Markdown, themed --------------------------------------------------
+   Colour choices here are measured, not eyeballed. Across all eleven palettes
+   only --fg (min 7.1:1) and --accent (min 4.8:1) clear WCAG AA at body size;
+   --accent2, --green and --purple drop below 3:1 on catppuccin-latte, the one
+   light theme. So emphasis takes theme colour where that is safe, and heading
+   hierarchy is carried by accent-coloured markers rather than risky text
+   colours. --aqua is safe on ten of eleven and overridden on the eleventh. */
+
+/* h3-h6 get their markdown hashes back, in the accent colour. It reads as the
+   source you actually wrote, matches the terminal framing used elsewhere on the
+   page, and makes depth obvious at a glance without tinting the text itself.
+   h2 keeps its own small-caps section-rule treatment above. */
+.prose h3, .prose h4, .prose h5, .prose h6 {
+  display: flex; align-items: baseline; gap: 12px;
+  color: var(--fg); font-weight: 700; letter-spacing: -0.02em;
+}
+.prose h3::before, .prose h4::before,
+.prose h5::before, .prose h6::before {
+  color: var(--accent); font-weight: 500; flex: none; opacity: 0.9;
+}
+.prose h3 { margin: 40px 0 0; font-size: 20px; }
+.prose h3::before { content: "###";    font-size: 15px; }
+.prose h4 { margin: 32px 0 0; font-size: 17.5px; }
+.prose h4::before { content: "####";   font-size: 13.5px; }
+.prose h5 { margin: 28px 0 0; font-size: 16px; }
+.prose h5::before { content: "#####";  font-size: 12.5px; }
+.prose h6 { margin: 26px 0 0; font-size: 14.5px; color: var(--dim); }
+.prose h6::before { content: "######"; font-size: 11.5px; }
+.prose h3 + p, .prose h4 + p, .prose h5 + p, .prose h6 + p { margin-top: 12px; }
+
 .prose ul, .prose ol { margin: 20px 0 0; padding-left: 24px; font-size: 16.5px; line-height: 1.85; color: var(--fg); }
 .prose li + li { margin-top: 8px; }
 .prose li::marker { color: var(--accent); }
-.prose strong { font-weight: 700; color: var(--fg); }
-.prose em { font-style: italic; }
+
+.prose strong { font-weight: 700; color: var(--accent); }
+.prose em { font-style: italic; color: var(--aqua); }
+/* Bold inside italic (or vice versa) should not fight itself. */
+.prose strong em, .prose em strong { color: var(--accent); }
+
+/* Per-palette fallbacks where the generic choice is not readable. Measured
+   against the colour actually behind the text, which for inline code is
+   --raised rather than --bg. */
+[data-theme="catppuccin-latte"] .prose em { color: var(--fg); }        /* aqua 3.3:1 */
+[data-theme="catppuccin-latte"] .prose code,
+[data-theme="nord"] .prose code { color: var(--fg); }                 /* accent2 2.3 / 3.0:1 */
 .prose hr { border: 0; border-top: 1px solid var(--line); margin: 44px 0; }
 .prose a { color: var(--accent); border-bottom: 1px solid var(--line2); }
 .prose a:hover { color: var(--accent2); border-color: var(--accent2); }
