@@ -18,14 +18,15 @@
 set -euo pipefail
 
 REPO="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-PUBLISH_DIR="Blog"
+BLOG_DIR="Blog"
+PUBLISH_DIR="Blog/Published"
 
 # The vault lives in a different place on each machine, so probe the known
 # locations rather than hardcoding one and breaking the other. An explicit
 # VAULT= in the environment always wins.
 if [ -z "${VAULT:-}" ]; then
   for candidate in "$HOME/Documents/Obsidian Vault" "$HOME/Obsidian Vault"; do
-    if [ -d "$candidate/$PUBLISH_DIR" ]; then VAULT="$candidate"; break; fi
+    if [ -d "$candidate/$BLOG_DIR" ]; then VAULT="$candidate"; break; fi
   done
 fi
 VAULT="${VAULT:-$HOME/Documents/Obsidian Vault}"
@@ -43,12 +44,16 @@ done
 
 cd "$REPO"
 
-[ -d "$VAULT/$PUBLISH_DIR" ] || { echo "no $PUBLISH_DIR/ in vault: $VAULT" >&2; exit 1; }
+[ -d "$VAULT/$BLOG_DIR" ] || { echo "no $BLOG_DIR/ in vault: $VAULT" >&2; exit 1; }
 git rev-parse --git-dir >/dev/null 2>&1 || { echo "$REPO is not a git repository" >&2; exit 1; }
 
 # --- 1. debounce ------------------------------------------------------------
 # A note touched in the last QUIET_SECONDS may still be mid-sync. Rather than
 # publish a fragment, back off and let the next run pick it up.
+#
+# Scoped to PUBLISH_DIR, not all of BLOG_DIR: only notes that can actually
+# ship should be able to hold up a publish. Editing a draft or a concept
+# note used to block everything for a minute for no reason.
 recent="$(ruby -e '
   root, quiet = ARGV[0], ARGV[1].to_i
   now = Time.now
@@ -66,7 +71,7 @@ if [ -n "$recent" ]; then
 fi
 
 # --- 2. import --------------------------------------------------------------
-echo "importing from $VAULT/$PUBLISH_DIR"
+echo "importing from $VAULT/$BLOG_DIR"
 if [ "$DRY_RUN" -eq 1 ]; then
   ruby script/import_vault.rb "$VAULT" --dry-run
   exit 0
