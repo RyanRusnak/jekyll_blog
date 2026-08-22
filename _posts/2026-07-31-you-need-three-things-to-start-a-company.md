@@ -31,7 +31,7 @@ You need to be knowledgeable enough in a field to know that it will work. Said i
 
 This is also why I would look at an app think, “that is so stupid. Why would anyone want an app that makes you look like a dog when you stick out your tongue?” Well, I did not know enough about people to know that millions of people wanted that. I was not an expert in that domain so I never could have made it succeed.
 ##### The Data
-If you have the idea and you are an expert in the domain, you are **way** ahead of most people. You can’t even see the non-expert idea people from where you are standing. But, data puts you even farther ahead. When I met Nick, he had the idea for a tech enabled freight forwarder, he was running two successful logistics companies, **and** he had tens of thousands of rows of documntedverrors that were made by logistics companies over the course of a decade that was carefully curated. To put it simply, it was the greatest jumping off point to start a company, ever,
+If you have the idea and you are an expert in the domain, you are **way** ahead of most people. You can’t even see the non-expert idea people from where you are standing. But, data puts you even farther ahead. When I met Nick, he had the idea for a tech enabled freight forwarder, he was running two successful logistics companies, **and** he had tens of thousands of rows of documented errors that were made by logistics companies over the course of a decade that was carefully curated. To put it simply, it was the greatest jumping off point to start a company, ever,
 
 We immediately had our road map. There was no struggling for product market fit. We sorted a spreadsheet by count and started at the top. Of course, then we had to execute, but that is a different post. 
 

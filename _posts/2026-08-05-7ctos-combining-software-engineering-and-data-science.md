@@ -14,4 +14,4 @@ slug: 7ctos-combining-software-engineering-and-data-science
 
 I gave this presentation when the world was way different! This was before LLMs were really a thing, COVID-19 wasn't a household name, and I only had one kid! Funny enough, I was talking about how powerful recurrent neural nets were, which were kind of a precursor to LLMs. 
 
-https://www.youtube.com/watch?v=pxNc77Fnfuo
+[![Combining Software Engineering and Data Science — 7CTOs talk](https://img.youtube.com/vi/pxNc77Fnfuo/sddefault.jpg)](https://www.youtube.com/watch?v=pxNc77Fnfuo)
