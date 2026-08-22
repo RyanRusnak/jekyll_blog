@@ -45,6 +45,14 @@ IMG_DIR   = "assets/img"
 ROOT      = File.join(VAULT, PUBLISH_DIR)
 BLOG_ROOT = File.join(VAULT, BLOG_DIR)
 
+# Excalidraw drawings live in the plugin's own folder, outside PUBLISH_DIR, and
+# a .excalidraw.md file is a compressed scene graph rather than an image. The
+# plugin's auto-export writes a real image beside each drawing; that export is
+# what ships. This is one explicitly named folder, not a vault-wide glob, so a
+# stray basename in Finances/ still cannot be picked up.
+DRAWING_DIR  = "Excalidraw"
+DRAWING_ROOT = File.join(VAULT, DRAWING_DIR)
+
 IMAGE_EXT = "png|jpe?g|gif|webp|svg"
 
 abort "vault not found: #{VAULT}" unless Dir.exist?(VAULT)
@@ -246,6 +254,36 @@ def rewrite_embeds(text, root, copied, warnings, note_name)
   end
 end
 
+# `![[Drawing.excalidraw]]` is what Obsidian writes, and it renders live there.
+# Resolve it to whatever the plugin exported. Several export naming conventions
+# are tried rather than assumed, so this keeps working if the plugin changes it.
+#
+# A missing export warns and drops the embed, matching rewrite_embeds — the post
+# still publishes, minus the picture, and the warning says how to fix it.
+def rewrite_drawings(text, copied, warnings, note_name)
+  text.gsub(/!\[\[([^\]|]+?)\.excalidraw(?:\.md)?(?:\|([^\]]+))?\]\]/i) do
+    name, caption = File.basename(Regexp.last_match(1).strip), Regexp.last_match(2)
+    candidates = ["#{name}.excalidraw.svg", "#{name}.svg",
+                  "#{name}.excalidraw.png", "#{name}.png",
+                  "#{name}.excalidraw.dark.svg", "#{name}.excalidraw.light.svg"]
+    found = candidates.lazy.map { |c|
+      Dir.glob(File.join(DRAWING_ROOT, "**", c), File::FNM_CASEFOLD).first
+    }.find(&:itself)
+
+    if found
+      base = File.basename(found)
+      copied << base
+      FileUtils.cp(found, File.join(IMG_DIR, base)) unless DRY_RUN
+      %(<figure><img src="/assets/img/#{base}" alt="#{caption || name}">) +
+        (caption ? %(<figcaption>#{caption}</figcaption>) : "") + "</figure>"
+    else
+      warnings << "#{note_name}: no export found for #{name}.excalidraw — open the " \
+                  "drawing once with autoexportSVG on to generate it (looked in #{DRAWING_DIR}/)"
+      ""
+    end
+  end
+end
+
 # True if the note contains TeX. Matches $$…$$ (which kramdown parses) and
 # Obsidian's inline $…$ (which it does not) — the lookarounds keep the inline
 # pattern from matching one half of a $$ pair.
@@ -311,6 +349,7 @@ published.each do |note|
   body = rewrite_callouts(body)
   body = rewrite_mermaid(body)
   body = rewrite_youtube(body)
+  body = rewrite_drawings(body, copied_images, warnings, File.basename(note[:path]))
   body = rewrite_wikilinks(body, notes)
 
   front = {
