@@ -18,8 +18,17 @@
 set -euo pipefail
 
 REPO="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-VAULT="${VAULT:-$HOME/Obsidian Vault}"
 PUBLISH_DIR="Blog"
+
+# The vault lives in a different place on each machine, so probe the known
+# locations rather than hardcoding one and breaking the other. An explicit
+# VAULT= in the environment always wins.
+if [ -z "${VAULT:-}" ]; then
+  for candidate in "$HOME/Documents/Obsidian Vault" "$HOME/Obsidian Vault"; do
+    if [ -d "$candidate/$PUBLISH_DIR" ]; then VAULT="$candidate"; break; fi
+  done
+fi
+VAULT="${VAULT:-$HOME/Documents/Obsidian Vault}"
 QUIET_SECONDS="${QUIET_SECONDS:-60}"
 
 ASSUME_YES=0

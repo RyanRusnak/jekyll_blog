@@ -253,6 +253,39 @@ def has_math?(text)
   text.match?(/\$\$.+?\$\$/m) || text.match?(/(?<!\$)\$(?!\s)[^$\n]+\$(?!\$)/)
 end
 
+# A bare YouTube URL alone on its line becomes a real player. kramdown's GFM
+# parser does not implement GFM autolinking, so such a URL would otherwise ship
+# as literal text — which is exactly what it used to do.
+#
+# Only a line that is *nothing but* the URL is touched, so `[text](url)` links
+# and inline mentions are left alone, and a hand-written thumbnail still wins.
+# Fenced code blocks are skipped: a URL in an example is not an embed.
+YOUTUBE_RE = %r{
+  \Ahttps?://(?:www\.|m\.)?
+  (?: youtube\.com/(?: watch\?(?:[^\s]*&)?v= | shorts/ | embed/ | live/ )
+    | youtu\.be/ )
+  ([A-Za-z0-9_-]{11})
+  (?:[?&\#][^\s]*)?\z
+}x
+
+def rewrite_youtube(text)
+  in_fence = false
+  text.lines.map do |line|
+    if line.match?(/^\s*(?:```|~~~)/)
+      in_fence = !in_fence
+      next line
+    end
+    next line if in_fence
+    m = line.strip.match(YOUTUBE_RE)
+    next line unless m
+
+    %(<div class="video"><iframe src="https://www.youtube-nocookie.com/embed/#{m[1]}" ) +
+      %(title="YouTube video player" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" ) +
+      %(allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" ) +
+      %(allowfullscreen></iframe></div>\n)
+  end.join
+end
+
 def rewrite_mermaid(text)
   text.gsub(/^```mermaid\n(.*?)^```$/m) { %(<div class="mermaid">\n#{Regexp.last_match(1)}</div>) }
 end
@@ -277,6 +310,7 @@ published.each do |note|
   body = rewrite_embeds(body, ROOT, copied_images, warnings, File.basename(note[:path]))
   body = rewrite_callouts(body)
   body = rewrite_mermaid(body)
+  body = rewrite_youtube(body)
   body = rewrite_wikilinks(body, notes)
 
   front = {
@@ -289,6 +323,7 @@ published.each do |note|
     "slug"        => note[:slug],
     "dropcap"     => meta["dropcap"],
     "mermaid"     => body.include?(%(class="mermaid")) || nil,
+    "video"       => body.include?(%(class="video")) || nil,
     "math"        => has_math?(body) || nil
   }
   front = front.reject { |_, v| v.nil? }

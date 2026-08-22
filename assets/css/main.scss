@@ -381,6 +381,11 @@ img { max-width: 100%; height: auto; }
 .prose figure { margin: 26px 0 0; }
 .prose figure img { display: block; width: 100%; border: 1px solid var(--line2); }
 .prose figcaption, .prose img + em { display: block; margin-top: 10px; font-size: 12px; color: var(--faint); font-style: normal; }
+
+/* Bare YouTube URLs become embeds — see rewrite_youtube in import_vault.rb.
+   aspect-ratio holds the 16:9 box before the iframe loads, so nothing jumps. */
+.prose .video { position: relative; margin: 26px 0 0; aspect-ratio: 16 / 9; border: 1px solid var(--line2); background: var(--panel); }
+.prose .video iframe { position: absolute; inset: 0; display: block; width: 100%; height: 100%; border: 0; }
 .prose table { width: 100%; border-collapse: collapse; margin: 26px 0 0; font-size: 14px; }
 .prose th, .prose td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--line); }
 .prose th { font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--faint); font-weight: 500; }
