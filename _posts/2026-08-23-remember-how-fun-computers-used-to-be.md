@@ -1,8 +1,8 @@
 ---
 layout: post
 title: Remember How Fun Computers Used to Be?
-date: '2026-07-31'
-kind: notes
+date: '2026-08-23'
+kind: essay
 tags:
 - linux
 - nostalgia
