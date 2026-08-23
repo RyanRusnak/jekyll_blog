@@ -50,16 +50,16 @@ The first step in accepting the place on your mountaintop is **denial**. I can't
 
 Even worse, men sometimes like to blame other people for the parts of the mountaintop that they don't like! Social media and predatory news channels love weaponizing unfocused anger. Maybe... immigrants took the job **you** deserved. Maybe it is those gosh darn minorities that moved into your county that never actually ate the pets you thought they ate.
 
-Or maybe the call is coming from inside the house! Maybe it is your wife that is preventing you from living the life you want. In Elliot Jaques book *Death and the mid-life Crisis*, he states:
+Or maybe the call is coming from inside the house! Maybe it is your wife that is preventing you from living the life you want. In Elliott Jaques book *Death and the mid-life Crisis*, he states:
 
-*"The compulsive attempts... to remain young, the hypochondriacal concern over health and appearance the emergence of sexual promiscuity in order to prove youth and potency the hollowness and lack of genuine enjoyment of life... are familiar patterns. They are attempts at a race against time." Elliot Jaques, "Death and the mid-life crisis" (1965)*
+*"The compulsive attempts... to remain young, the hypochondriacal concern over health and appearance the emergence of sexual promiscuity in order to prove youth and potency the hollowness and lack of genuine enjoyment of life... are familiar patterns. They are attempts at a race against time." Elliott Jaques, "Death and the mid-life crisis" (1965)*
 ##### Why in the world this happens
 
 No one really knows which is why it is fun to talk about. Some say it is **psychological**: another identity crisis just like adolescence. Maybe high school was great, but you went from being captain of the team to pushing shopping carts. Maybe high school was awful, but you now find yourself in a position where many people are depending on your work or guidance. Either way, you are no longer who you were and thus feel lost.
 
 Some say it is **physical**: you are starting to get some grays and every time you look in the mirror, you see the runaway train that is aging. You aren't as strong, you aren't energetic, and you can hardly stay up past 9:00 PM.
 
-Some say it is **cultural**. In the 1970s, Bernice Newgarten introduced the concept of the timeline of life.
+Some say it is **cultural**. In the 1970s, Bernice Neugarten introduced the concept of the timeline of life.
 
 Born, marry, have kids, die
 
