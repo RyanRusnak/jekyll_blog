@@ -11,6 +11,11 @@ baseurl: ""
 # rose-pine kanagawa matte-black osaka-jade ristretto
 default_theme: gruvbox
 
+# GoatCounter site code — the subdomain part of <code>.goatcounter.com.
+# Blank means no analytics. The beacon only loads in production builds, so
+# `jekyll serve` locally never counts you as a visitor.
+goatcounter: "rusnak44"
+
 permalink: /:title/
 markdown: kramdown
 highlighter: rouge
