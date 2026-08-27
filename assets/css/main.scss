@@ -522,6 +522,186 @@ mjx-container[display="true"] {
 .palette-item.is-current .nm { color: var(--fg); }
 .palette-item .mk { font-size: 11px; color: var(--faint); }
 
+/* --- Contact & Snake CAPTCHA -------------------------------- */
+.contact-page { padding-bottom: 96px; }
+.snake-frame {
+  margin-top: 36px;
+  border: 1px solid var(--line2);
+  background: var(--panel);
+}
+.snake-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--line2);
+  background: var(--raised);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+.snake-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--dim);
+  font-weight: 700;
+}
+.snake-title .dot { color: var(--accent); font-size: 9px; }
+.snake-stats {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 11px;
+}
+.snake-stats .badge { color: var(--fg); }
+.snake-stats .badge b { color: var(--accent); }
+.status-locked { color: var(--accent2); }
+.status-active { color: var(--blue); }
+.status-unlocked { color: var(--green); font-weight: 700; }
+.status-error { color: var(--red); font-weight: 700; }
+
+.snake-stage {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 16px;
+  background: var(--bg);
+}
+#snake-canvas {
+  display: block;
+  width: 100%;
+  max-width: 400px;
+  height: auto;
+  aspect-ratio: 4 / 3;
+  border: 1px solid var(--line2);
+  background: var(--panel);
+  cursor: pointer;
+  touch-action: none;
+}
+
+.snake-controls-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 12px 16px;
+  border-top: 1px solid var(--line2);
+  background: var(--raised);
+  font-size: 11.5px;
+}
+.snake-hints {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  color: var(--dim);
+}
+.key-hint {
+  border: 1px solid var(--line2);
+  background: var(--panel);
+  padding: 2px 6px;
+  color: var(--fg);
+  font-size: 10.5px;
+  font-weight: 600;
+}
+
+.snake-dpad {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+.dpad-row {
+  display: flex;
+  gap: 4px;
+}
+.dpad-btn {
+  width: 32px;
+  height: 30px;
+  border: 1px solid var(--line2);
+  background: var(--panel);
+  color: var(--fg);
+  font-size: 11px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: inherit;
+  user-select: none;
+}
+.dpad-btn:hover, .dpad-btn:active {
+  background: var(--accent);
+  color: var(--bg);
+  border-color: var(--accent);
+}
+
+.snake-revealed {
+  margin-top: 32px;
+  border: 1px solid var(--green);
+  background: var(--panel);
+  padding: 20px 24px;
+  animation: fadeIn 0.3s ease-in-out;
+}
+.snake-revealed[hidden] { display: none; }
+.revealed-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 11.5px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--green);
+  font-weight: 700;
+  margin-bottom: 14px;
+}
+.revealed-header .ok {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  border: 1px solid var(--green);
+  font-size: 11px;
+}
+.revealed-label {
+  font-size: 12px;
+  color: var(--faint);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+.revealed-email {
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin-bottom: 18px;
+}
+.revealed-email-link {
+  color: var(--accent);
+  border-bottom: 1px solid var(--accent);
+}
+.revealed-email-link:hover {
+  color: var(--accent2);
+  border-color: var(--accent2);
+}
+.revealed-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.btn-primary.is-copied {
+  background: var(--green);
+  border-color: var(--green);
+  color: var(--bg);
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
 /* --- Responsive -------------------------------------------- */
 @media (max-width: 720px) {
   .wrap { padding: 0 20px; }
@@ -534,6 +714,11 @@ mjx-container[display="true"] {
   .prevnext a.next { text-align: left; }
   .theme-btn .key, .rss, .hide-sm { display: none; }
   .result { grid-template-columns: 1fr; }
+  .snake-controls-bar {
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+  }
 
   /* The three-column topbar overflowed the viewport at phone widths, which
      pushed the theme button off-screen and was the only source of horizontal

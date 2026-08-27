@@ -15,3 +15,7 @@ That means I mostly write about software, but it turns out that I have plenty of
 - **Reading** — [Dungeon Crawler Carl](https://mattdinniman.com/books/dungeon-crawler-carl/) by Matt Dinniman
 - **Running** — [Omarchy](https://omarchy.org/) Linux most days.
 - **Avoiding** — almost all social media.
+
+## Contact
+
+Want to reach out? Head over to the [contact page]({{ '/contact/' | relative_url }}) and prove you are a human to unlock my email.

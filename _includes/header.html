@@ -5,7 +5,8 @@
   <nav class="topnav">
     <a href="{{ '/' | relative_url }}" class="{% if page.url == '/' or page.layout == 'post' %}is-active{% endif %}"><span class="n">1</span>writing</a>
     <a href="{{ '/about/' | relative_url }}" class="{% if page.url == '/about/' %}is-active{% endif %}"><span class="n">2</span>about</a>
-    <a href="{{ '/search/' | relative_url }}" class="{% if page.url == '/search/' %}is-active{% endif %}"><span class="n">3</span>search</a>
+    <a href="{{ '/contact/' | relative_url }}" class="{% if page.url == '/contact/' %}is-active{% endif %}"><span class="n">3</span>contact</a>
+    <a href="{{ '/search/' | relative_url }}" class="{% if page.url == '/search/' %}is-active{% endif %}"><span class="n">4</span>search</a>
   </nav>
   <div class="topbar-right">
     <a class="rss" href="{{ '/feed.xml' | relative_url }}">RSS</a>
