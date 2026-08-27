@@ -38,7 +38,7 @@ Nearest airport is **Santa Rosa (STS)**, about a 45-minute drive to the resort.
 *Kendall, Alex & Shawna join during the day. Nikki & Ki arrive in the evening.*
 
 - **Midday** — pool and lunch at the resort
-- **Afternoon** — Reverie tasting, Diamond Mountain
+- **1:30 PM** — Reverie tasting, Diamond Mountain
 - **7:00 PM** — dinner at Bouchon, Yountville
 
 ## Friday, September 4 — the big wine day
