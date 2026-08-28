@@ -245,7 +245,8 @@ def rewrite_embeds(text, root, copied, warnings, note_name)
     if src
       copied << base
       FileUtils.cp(src, File.join(IMG_DIR, base)) unless DRY_RUN
-      %(<figure><img src="/assets/img/#{base}" alt="#{caption}">) +
+      alt = caption || base.sub(/\.[^.]+\z/, "").tr("-_", " ")
+      %(<figure><img src="/assets/img/#{base}" alt="#{alt}">) +
         (caption ? %(<figcaption>#{caption}</figcaption>) : "") + "</figure>"
     else
       warnings << "#{note_name}: image #{base.inspect} not found under #{PUBLISH_DIR}/ — embed dropped"
