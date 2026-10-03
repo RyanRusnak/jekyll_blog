@@ -18,7 +18,7 @@ A while ago, I <a class="wikilink" href="/getting-my-personal-email-under-contro
 
 That model was: *Sharing all of my emails from friends, family, Amazon, doctors, and more for an email service*. 
 
-And I just... didn't feel good about it. For one, none of the people that email me from non-gmail accounts consent to that. I don't have a big warning that says ***"anything you say in this email is being recorded forever, used to train AI, and will be sold to the highest bidder who will leverage that information against you to sell you things you don't need or maybe even jack up your insurance premiums"***.
+And I just... didn't feel good about it. For one, none of the people that email me from non-gmail accounts consent to that. I don't have a big warning that says ***"anything you send me will be read by Google's software, summarized by its AI, and kept forever. If you send me a receipt, it goes on a list of everything I've ever bought. Google promises not to use any of it for ads or to train that AI, but the promise lives on a policy page they can rewrite whenever they want."***
 
 <figure><img src="/assets/img/google_modal.excalidraw.svg" alt="A Gmail warning modal that tells people what happens to anything they email me"><figcaption>A Gmail warning modal that tells people what happens to anything they email me</figcaption></figure>
 
@@ -32,7 +32,9 @@ The second reason I didn't feel good about my relationship with Gmail was becaus
 
 That is a normal agreement between a human and a dog and is not a normal agreement between a human and an email service.
 
-Interestingly, if your work chooses to pay for corporate Gmail (which I do), your data is not used to train Gemini or sold to ad brokers! That is... oddly... reminiscent of normal business. It is just an excellent service that we are happy to pay for every month. 
+Interestingly, if your work pays for Google Workspace (which mine does), you get a contract instead of a policy page. Google has to put in writing what it will and won't do with your data, and you can actually read it. That is... oddly... reminiscent of normal business. It is just an excellent service that we are happy to pay for every month.
+
+Fun fact: Google stopped using Gmail content for ads in 2017. Privacy wasn't the reason. Businesses didn't want to buy the paid version of a product whose free version read your mail for ads. Even Google knew the deal was weird. 
 
 ### Surveillance Capitalism
 
@@ -42,7 +44,7 @@ I have heard the term *Surveillance Capitalism* before, but I kind of always tho
 
 Maybe. It depends what you value. 
 
-Companies like Meta estimate that the revenue they earn from selling user data is [$57.03 per user](https://statista.com/statistics/234056/facebooks-average-advertising-revenue-per-user) and roughly 5 times that in the US & Canada. Apparently [selling your phone number goes for as little as 12 cents but location and health information is more](https://www.freevacy.com/news/financial-times/how-much-would-you-sell-your-personal-data-for/6727). 12 cents! Can I buy my own phone number back to stop all of these spam calls and text messages? To me, it isn't really the dollar amount. It is just the fact that parts of me are being sold at all.
+Companies like Meta earn about [$57.03 per user](https://statista.com/statistics/234056/facebooks-average-advertising-revenue-per-user) a year in ad revenue and roughly 5 times that in the US & Canada. Apparently [selling your phone number goes for as little as 12 cents but location and health information is more](https://www.freevacy.com/news/financial-times/how-much-would-you-sell-your-personal-data-for/6727). 12 cents! Can I buy my own phone number back to stop all of these spam calls and text messages? To me, it isn't really the dollar amount. It is just the fact that parts of me are being sold at all.
 
 ### But it gets so much weirder
 
@@ -55,7 +57,7 @@ If you thought your phone number being worth 12 cents was weird, buckle up. A [s
 
 Personally, you would have to pay me $300 to use Facebook, but $8,400 to give up email! That is a big number!
 
-So if you are an American, your data is being sold for $300-ish per year, but you would need to be paid $8,400 to give up email.
+So if you are an American, your data earns them $300-ish per year, but you would need to be paid $8,400 to give up email.
 
 That is $8,100 of value you are getting for free! Turns out, *selling your data is a great deal!* Who saw that twist coming?
 
