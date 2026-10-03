@@ -288,8 +288,14 @@ end
 # True if the note contains TeX. Matches $$…$$ (which kramdown parses) and
 # Obsidian's inline $…$ (which it does not) — the lookarounds keep the inline
 # pattern from matching one half of a $$ pair.
+#
+# Inline math follows Obsidian's own rule: no space after the opening $, no
+# space before the closing $, and the closing $ is not followed by a digit.
+# Without that, two prices on one line ("$300 … but $8,400") count as math,
+# MathJax gets loaded, and the text between them renders as italic TeX.
 def has_math?(text)
-  text.match?(/\$\$.+?\$\$/m) || text.match?(/(?<!\$)\$(?!\s)[^$\n]+\$(?!\$)/)
+  text.match?(/\$\$.+?\$\$/m) ||
+    text.match?(/(?<![$\\])\$(?![\s$])[^$\n]*[^\s$\\]\$(?![$\d])/)
 end
 
 # A bare YouTube URL alone on its line becomes a real player. kramdown's GFM
