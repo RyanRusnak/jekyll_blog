@@ -11,7 +11,6 @@ description: Free Gmail is the only deal in my life that works like the one I ha
   with my dog. Surveillance capitalism, what your data is actually worth, and why
   it is a false choice.
 slug: google-is-pooping-in-your-house
-math: true
 ---
 
 A while ago, I <a class="wikilink" href="/getting-my-personal-email-under-control-with-hey/">made the switch from Gmail to Hey</a>.  I ended up switching for a lot of reasons, but what started my search was the growing discomfort of the business model that I was participating in. 
@@ -55,7 +54,7 @@ If you thought your phone number being worth 12 cents was weird, buckle up. A [s
 - Maps: about **$3,600**
 - Social media: about **$300**
 
-Personally, you would have to pay me $300 to use Facebook, but $8,400 to give up email! That is a big number!
+Personally, you would have to pay me $300 *to use* Facebook, but people on average needing $8,400 to give up email is a bigger number than I imagined! Most people will happily tell you how much they hate email!
 
 So if you are an American, your data earns them $300-ish per year, but you would need to be paid $8,400 to give up email.
 
