@@ -48,7 +48,7 @@ Now we know why everyone is walking around acting like an expert!
 ### What to do about it
 Well, we need to find a way to get people from the peak of Mt. Stupid way down the hill and to start climbing up the Slope of Enlightenment to the Plateau of Sustainability. That is a pretty long and painful commute for some people depending on the topic.
 
-<figure><img src="/assets/img/dunning_kruger_2.excalidraw.svg" alt="The same curve, with someone on the Peak of Mt. Stupid thinking "it is way easier to just stay here" while the Plateau of Sustainability calls "Come on over!""><figcaption>The same curve, with someone on the Peak of Mt. Stupid thinking "it is way easier to just stay here" while the Plateau of Sustainability calls "Come on over!"</figcaption></figure>
+<figure><img src="/assets/img/dunning_kruger_2.excalidraw.svg" alt="The same curve, with someone on the Peak of Mt. Stupid thinking &quot;it is way easier to just stay here&quot; while the Plateau of Sustainability calls &quot;Come on over!&quot;"><figcaption>The same curve, with someone on the Peak of Mt. Stupid thinking "it is way easier to just stay here" while the Plateau of Sustainability calls "Come on over!"</figcaption></figure>
 
 Thankfully, there is another study to help us out!
 

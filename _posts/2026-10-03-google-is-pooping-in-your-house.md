@@ -27,7 +27,7 @@ The second reason I didn't feel good about my relationship with Gmail was becaus
 
 "*I will let you live in my house and feed you if you promise not to bite my tiny humans or go poop or pee inside*."
 
-<figure><img src="/assets/img/google_no_pooping.excalidraw.svg" alt="The agreement I have with my dog: live here, eat here, don't bite the tiny humans, no pooping inside"><figcaption>The agreement I have with my dog: live here, eat here, don't bite the tiny humans, no pooping inside</figcaption></figure>
+<figure><img src="/assets/img/google_no_pooping.excalidraw.svg" alt="The agreement I have with my dog: live here, eat here, don&#39;t bite the tiny humans, no pooping inside"><figcaption>The agreement I have with my dog: live here, eat here, don't bite the tiny humans, no pooping inside</figcaption></figure>
 
 That is a normal agreement between a human and a dog and is not a normal agreement between a human and an email service.
 

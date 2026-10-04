@@ -25,6 +25,7 @@
 require "yaml"
 require "fileutils"
 require "date"
+require "cgi"
 
 VAULT       = File.expand_path(ARGV.find { |a| !a.start_with?("--") } || "~/Obsidian Vault")
 DRY_RUN     = ARGV.include?("--dry-run")
@@ -246,7 +247,7 @@ def rewrite_embeds(text, root, copied, warnings, note_name)
       copied << base
       FileUtils.cp(src, File.join(IMG_DIR, base)) unless DRY_RUN
       alt = caption || base.sub(/\.[^.]+\z/, "").tr("-_", " ")
-      %(<figure><img src="/assets/img/#{base}" alt="#{alt}">) +
+      %(<figure><img src="/assets/img/#{base}" alt="#{CGI.escapeHTML(alt)}">) +
         (caption ? %(<figcaption>#{caption}</figcaption>) : "") + "</figure>"
     else
       warnings << "#{note_name}: image #{base.inspect} not found under #{PUBLISH_DIR}/ — embed dropped"
@@ -275,7 +276,7 @@ def rewrite_drawings(text, copied, warnings, note_name)
       base = File.basename(found)
       copied << base
       FileUtils.cp(found, File.join(IMG_DIR, base)) unless DRY_RUN
-      %(<figure><img src="/assets/img/#{base}" alt="#{caption || name}">) +
+      %(<figure><img src="/assets/img/#{base}" alt="#{CGI.escapeHTML(caption || name)}">) +
         (caption ? %(<figcaption>#{caption}</figcaption>) : "") + "</figure>"
     else
       warnings << "#{note_name}: no export found for #{name}.excalidraw — open the " \
